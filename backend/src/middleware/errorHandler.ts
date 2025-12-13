@@ -8,7 +8,10 @@ export function errorHandler(
     _next: NextFunction
 ) {
     if (err instanceof DomainError) {
-        return res.status(404).json({ message: err.message });
+        if (err.message === "Sweet not found") {
+            return res.status(404).json({ message: err.message });
+        }
+        return res.status(400).json({ message: err.message });
     }
 
     console.error(err);
