@@ -1,4 +1,65 @@
-# Prisma local database
+########################################
+# OS / Editor junk
+########################################
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+
+########################################
+# Node.js (global)
+########################################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+########################################
+# Environment variables
+########################################
+.env
+.env.local
+.env.*.local
+
+
+########################################
+# Backend
+########################################
+
+# Prisma local databases
 backend/prisma/dev.db
 backend/prisma/*.db
 backend/prisma/*.db-journal
+
+# Build output (if added later)
+backend/dist/
+
+
+########################################
+# Frontend (Vite + React)
+########################################
+
+# Build output
+frontend/dist/
+
+# Vite cache
+frontend/.vite/
+
+# Frontend node_modules (safety)
+frontend/node_modules/
+
+
+########################################
+# Testing / Coverage
+########################################
+coverage/
+.nyc_output/
+
+
+########################################
+# Logs
+########################################
+logs/
+*.log
