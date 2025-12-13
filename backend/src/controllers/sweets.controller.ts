@@ -3,6 +3,7 @@ import { Router } from "express";
 import { purchaseSweet, restockSweet } from "../services/sweet.service.js";
 import { validate } from "../middleware/validate.js";
 import { inventorySchema } from "../validators/inventory.schema.js";
+import { deleteSweet } from "../services/sweet.service.js";
 import { DomainError } from "../errors/domain.error.js";
 import prisma from "../prisma.js";
 import authGuard from "../middleware/authGuard.js";
@@ -77,6 +78,23 @@ router.post(
     }
 );
 
+// -------------------- DELETE SWEET (ADMIN) --------------------
+router.delete(
+    "/:id",
+    authGuard,
+    adminGuard,
+    async (req, res) => {
+        try {
+            await deleteSweet(req.params.id);
+            return res.status(204).send();
+        } catch (err) {
+            if (err instanceof DomainError) {
+                return res.status(404).json({ message: err.message });
+            }
+            throw err;
+        }
+    }
+);
 
 
 export default router;
