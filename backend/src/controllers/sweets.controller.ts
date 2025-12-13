@@ -84,17 +84,11 @@ router.delete(
     authGuard,
     adminGuard,
     async (req, res) => {
-        try {
-            await deleteSweet(req.params.id);
-            return res.status(204).send();
-        } catch (err) {
-            if (err instanceof DomainError) {
-                return res.status(404).json({ message: err.message });
-            }
-            throw err;
-        }
+        await deleteSweet(req.params.id);
+        return res.status(204).send();
     }
 );
+
 
 
 export default router;
