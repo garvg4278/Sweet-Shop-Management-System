@@ -1,49 +1,21 @@
 {
   "compilerOptions": {
-    /* Output directory */
-    "outDir": "./dist",
-
-    /* Module system (ESM for Node.js) */
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-
-    /* Target modern JS */
     "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
 
-    /* Allow default imports (ESM + CJS interop) */
+    "strict": true,
+    "skipLibCheck": true,
+
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    /* Support importing JSON */
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
 
-    /* Strong TypeScript safety */
-    "strict": true,
+    "types": ["node", "jest"],
 
-    /* Required for ts-jest when using ESM */
-    "isolatedModules": true,
-
-    /* Prevent noisy NodeNext error */
-    "verbatimModuleSyntax": false,
-
-    /* Skip type checking node_modules */
-    "skipLibCheck": true,
-
-    /* Needed so Express type extensions (req.user) are detected */
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-
-    /* Emit .js files */
-    "noEmit": false
+    "outDir": "dist"
   },
-
-  "include": [
-    "src",
-    "tests",
-    "src/types"
-  ],
-
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src", "tests"]
 }

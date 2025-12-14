@@ -1,30 +1,61 @@
-// src/services/auth.service.ts
-import prisma from "../prisma.js";
 import bcrypt from "bcryptjs";
-import { RegisterInput } from "../validators/auth.schema.js";
+import jwt from "jsonwebtoken";
+import prisma from "../prisma.js";
+import { DomainError } from "../errors/domain.error.js";
 
-const SALT_ROUNDS = 10;
+export async function registerUser(data: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  const existingUser = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
 
-export async function createUser(data: RegisterInput) {
-  const hashed = await bcrypt.hash(data.password, SALT_ROUNDS);
+  if (existingUser) {
+    throw new DomainError("User already exists");
+  }
 
-  return prisma.user.create({
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+
+  const user = await prisma.user.create({
     data: {
       name: data.name,
       email: data.email,
-      password: hashed,
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      createdAt: true,
+      password: hashedPassword,
     },
   });
+
+  // ✅ NEVER return password
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  };
 }
 
-export async function userExists(email: string): Promise<boolean> {
-  const record = await prisma.user.findUnique({ where: { email } });
-  return !!record;
+export async function loginUser(data: {
+  email: string;
+  password: string;
+}) {
+  const user = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
+
+  if (!user) {
+    throw new DomainError("Invalid credentials");
+  }
+
+  const isValid = await bcrypt.compare(data.password, user.password);
+  if (!isValid) {
+    throw new DomainError("Invalid credentials");
+  }
+
+  const token = jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.JWT_SECRET!,
+    { expiresIn: "1d" }
+  );
+
+  return { token };
 }

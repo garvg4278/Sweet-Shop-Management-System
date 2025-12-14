@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
-    const { registerUser } = useAuth();
+    const { register } = useAuth();
+    const navigate = useNavigate();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,11 +13,16 @@ export default function Register() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setError("");
+
         try {
-            setError("");
-            await registerUser({ name, email, password });
-        } catch {
-            setError("Registration failed");
+            await register(name, email, password);
+
+            // ✅ REDIRECT AFTER SUCCESSFUL REGISTER
+            navigate("/login");
+        } catch (err: any) {
+            console.error("API ERROR:", err.response?.data || err);
+            setError(err.response?.data?.message || "Registration failed");
         }
     }
 
@@ -31,6 +38,7 @@ export default function Register() {
                     placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    required
                 />
 
                 <input
@@ -38,6 +46,7 @@ export default function Register() {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
 
                 <input
@@ -46,6 +55,7 @@ export default function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
 
                 <button className="auth-button" type="submit">

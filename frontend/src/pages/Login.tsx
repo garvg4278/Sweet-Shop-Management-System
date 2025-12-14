@@ -1,20 +1,29 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const { loginUser } = useAuth();
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setError("");
+
         try {
-            setError("");
-            await loginUser({ email, password });
-        } catch {
-            setError("Invalid email or password");
+            await login(email, password);
+
+            // ✅ REDIRECT AFTER SUCCESSFUL LOGIN
+            navigate("/");
+            // OR if your sweets page route is different:
+            // navigate("/sweets");
+        } catch (err: any) {
+            console.error("API ERROR:", err.response?.data || err);
+            setError(err.response?.data?.message || "Login failed");
         }
     }
 
@@ -30,6 +39,7 @@ export default function Login() {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
 
                 <input
@@ -38,6 +48,7 @@ export default function Login() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
 
                 <button className="auth-button" type="submit">

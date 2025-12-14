@@ -1,26 +1,36 @@
+import "dotenv/config";
 import "express-async-errors";
 import express from "express";
-import bodyParser from "body-parser";
-import routes from "./routes.js";
+import cors from "cors";
+
+import routes from "./routes/index.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 const app = express();
 
-app.use(bodyParser.json());
+/* 🔑 CORS — THIS IS THE MISSING PIECE */
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend URL
+    credentials: true,
+  })
+);
+
+/* Body parsers */
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+/* Routes */
 app.use("/api", routes);
 
-// must be last
+/* Error handler MUST be last */
 app.use(errorHandler);
 
 export default app;
 
-// ESM-safe "run server only if executed directly"
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-if (process.argv[1] === __filename) {
+if (process.env.NODE_ENV !== "test") {
   const port = process.env.PORT || 4000;
-  app.listen(port, () => console.log(`Server running on ${port}`));
+  app.listen(port, () =>
+    console.log(`🚀 Server running on http://localhost:${port}`)
+  );
 }

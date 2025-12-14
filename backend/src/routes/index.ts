@@ -1,13 +1,10 @@
 import { Router } from "express";
-import authRouter from "./routes/auth.routes";
-import sweetsRouter from "./routes/sweets.routes";
+import authRouter from "./auth.routes.js";
+import sweetsRouter from "./sweets.routes.js";
 
 const router = Router();
 
-// Auth endpoints
 router.use("/auth", authRouter);
-
-// Sweet endpoints
 router.use("/sweets", sweetsRouter);
 
 export default router;

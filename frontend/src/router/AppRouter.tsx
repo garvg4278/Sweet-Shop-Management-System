@@ -1,17 +1,38 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-// import Sweets from "../pages/Sweets";
-// import Admin from "../pages/Admin";
+import Sweets from "../pages/Sweets";
+import Admin from "../pages/Admin";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" element={<Navigate to="/sweets" />} />
+            {/* Public routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            {/* <Route path="/sweets" element={<Sweets />} />
-            <Route path="/admin" element={<Admin />} /> */}
+
+            {/* Protected routes */}
+            <Route
+                path="/"
+                element={
+                    <ProtectedRoute>
+                        <Sweets />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/admin"
+                element={
+                    <ProtectedRoute>
+                        <Admin />
+                    </ProtectedRoute>
+                }
+            />
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
 }

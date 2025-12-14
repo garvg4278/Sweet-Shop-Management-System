@@ -36,6 +36,13 @@ backend/prisma/*.db-journal
 # Build output (if added later)
 backend/dist/
 
+# Prisma / SQLite databases
+*.db
+*.db-journal
+
+# Build output
+backend/dist/
+
 
 ########################################
 # Frontend (Vite + React)
