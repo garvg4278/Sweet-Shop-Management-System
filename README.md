@@ -1,4 +1,4 @@
-# í½¬ Sweet Shop â€” Internal Inventory & Request Management System
+# ğŸ¬ Sweet Shop â€” Internal Inventory & Request Management System
 
 A **full-stack internal inventory management system** built for managing sweets inventory, internal stock requests, and role-based workflows between **users** and **admins**.
 
@@ -6,7 +6,7 @@ This is **not an e-commerce app** â€” it is designed for **internal operations**
 
 ---
 
-## í·  Project Overview
+## ğŸ§  Project Overview
 
 This project models a **real-world internal supply workflow** commonly found in organizations:
 
@@ -20,15 +20,15 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í±¥ Roles & Permissions
+## ğŸ‘¥ Roles & Permissions
 
-### í±¤ User
+### ğŸ‘¤ User
 - View inventory
 - Create internal stock requests
 - Track request status (`PENDING`, `FULFILLED`)
 - Cannot modify inventory
 
-### í·‘â€í²¼ Admin
+### ğŸ§‘â€ğŸ’¼ Admin
 - View inventory
 - Add, update, restock, and delete sweets
 - View all user requests (Inbox)
@@ -37,7 +37,7 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í´„ Application Flow
+## ğŸ”„ Application Flow
 
 ### Inventory (`/`)
 - Publicly accessible
@@ -64,7 +64,7 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í¿—ï¸ Tech Stack
+## ğŸ—ï¸ Tech Stack
 
 ### Frontend
 - React (Vite)
@@ -88,7 +88,7 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í·„ï¸ Database Schema (Prisma)
+## ğŸ—„ï¸ Database Schema (Prisma)
 
 ### User
 - `id`
@@ -117,7 +117,7 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í´ Authentication & Authorization
+## ğŸ” Authentication & Authorization
 
 - JWT tokens issued on login
 - Token payload contains:
@@ -131,7 +131,7 @@ The system emphasizes **clarity, separation of concerns, and role-based access c
 
 ---
 
-## í¼ API Endpoints
+## ğŸŒ API Endpoints
 
 ### Authentication
 ```
@@ -161,7 +161,7 @@ DELETE /api/admin/sweets/:id
 
 ---
 
-## í¾¯ Key Features
+## ğŸ¯ Key Features
 
 - Internal stock request workflow
 - Admin-controlled inventory management
@@ -174,7 +174,7 @@ DELETE /api/admin/sweets/:id
 
 ---
 
-## íº€ Getting Started
+## ğŸš€ Getting Started
 
 ### Backend Setup
 ```bash
@@ -191,12 +191,12 @@ npm install
 npm run dev
 ```
 
-Backend runs on: `http://localhost:4000`  
+Backend runs on: `http://localhost:4000`
 Frontend runs on: `http://localhost:5173`
 
 ---
 
-## í´’ Security Considerations
+## ğŸ”’ Security Considerations
 
 - Passwords hashed using bcrypt
 - JWT secrets stored in `.env`
@@ -205,7 +205,7 @@ Frontend runs on: `http://localhost:5173`
 
 ---
 
-## í·ª Development Notes
+## ğŸ§ª Development Notes
 
 - SQLite used for development simplicity
 - Prisma migrations committed for reproducibility
@@ -217,7 +217,7 @@ Frontend runs on: `http://localhost:5173`
 
 ---
 
-## í´– AI Assistance Disclosure
+## ğŸ¤– AI Assistance Disclosure
 
 An AI assistant was used to generate initial boilerplate and architectural guidance.  
 All business logic, validation, debugging, and integration were manually implemented and verified.
@@ -228,7 +228,7 @@ Co-authored-by: ChatGPT <chatgpt@openai.com>
 
 ---
 
-## í³Œ Project Status
+## ğŸ“Œ Project Status
 
 âœ… Backend complete  
 âœ… Frontend complete  
