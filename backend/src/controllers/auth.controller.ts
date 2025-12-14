@@ -8,6 +8,7 @@ export async function registerController(req: Request, res: Response) {
     message: "User registered successfully",
     id: user.id,
     email: user.email,
+    role: user.role,
   });
 }
 

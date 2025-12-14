@@ -18,7 +18,7 @@ export default function AdminRoute({
     }
 
     // 🚫 Logged in but not admin
-    if (role !== "ADMIN") {
+    if (role !== "admin") {
         return <Navigate to="/" replace />;
     }
 

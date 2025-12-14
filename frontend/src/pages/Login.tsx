@@ -16,13 +16,8 @@ export default function Login() {
 
         try {
             await login(email, password);
-
-            // ✅ REDIRECT AFTER SUCCESSFUL LOGIN
             navigate("/");
-            // OR if your sweets page route is different:
-            // navigate("/sweets");
         } catch (err: any) {
-            console.error("API ERROR:", err.response?.data || err);
             setError(err.response?.data?.message || "Login failed");
         }
     }
@@ -35,7 +30,6 @@ export default function Login() {
                 {error && <p className="auth-error">{error}</p>}
 
                 <input
-                    className="auth-input"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -43,7 +37,6 @@ export default function Login() {
                 />
 
                 <input
-                    className="auth-input"
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -51,11 +44,9 @@ export default function Login() {
                     required
                 />
 
-                <button className="auth-button" type="submit">
-                    Login
-                </button>
+                <button type="submit">Login</button>
 
-                <p className="auth-link">
+                <p>
                     New here? <Link to="/register">Register</Link>
                 </p>
             </form>

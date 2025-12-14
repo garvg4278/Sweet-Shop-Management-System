@@ -15,6 +15,8 @@ model User {
   role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  requests  Request[]
 }
 
 model Sweet {
@@ -25,6 +27,8 @@ model Sweet {
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  requests  Request[]
 }
 
 model Purchase {
@@ -34,4 +38,19 @@ model Purchase {
   quantity  Int
   total     Float
   createdAt DateTime @default(now())
+}
+
+model Request {
+  id        String   @id @default(uuid())
+  userId    String
+  sweetId   String
+  quantity  Int
+  unit      String   // "kg" | "piece"
+  status    String   @default("PENDING")
+
+  user      User     @relation(fields: [userId], references: [id])
+  sweet     Sweet    @relation(fields: [sweetId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

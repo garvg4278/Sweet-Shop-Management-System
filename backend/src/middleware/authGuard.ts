@@ -18,7 +18,7 @@ export default function authGuard(
     const payload = verifyToken(token);
 
     req.user = {
-      id: payload.sub,
+      id: payload.userId,
       role: payload.role,
     };
 

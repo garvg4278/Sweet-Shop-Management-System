@@ -7,6 +7,7 @@ export async function registerUser(data: {
   name: string;
   email: string;
   password: string;
+  role?: string;
 }) {
   const existingUser = await prisma.user.findUnique({
     where: { email: data.email },
@@ -23,6 +24,7 @@ export async function registerUser(data: {
       name: data.name,
       email: data.email,
       password: hashedPassword,
+      role: data.role ?? "user", // ✅ default role
     },
   });
 
@@ -31,6 +33,7 @@ export async function registerUser(data: {
     id: user.id,
     name: user.name,
     email: user.email,
+    role: user.role, // ✅ REQUIRED
   };
 }
 
@@ -57,5 +60,13 @@ export async function loginUser(data: {
     { expiresIn: "1d" }
   );
 
-  return { token };
+  // ✅ RETURN USER INFO WITH ROLE
+  return {
+    token,
+    user: {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+  };
 }

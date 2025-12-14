@@ -2,16 +2,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { loginApi, registerApi } from "../api/auth.api";
 import { jwtDecode } from "jwt-decode";
 
-/* 🔐 JWT payload shape from backend */
 type JwtPayload = {
     userId: string;
-    role: "USER" | "ADMIN";
+    role: "user" | "admin"; // ✅ MATCH BACKEND
     exp: number;
 };
 
 type AuthContextType = {
     token: string | null;
-    role: "USER" | "ADMIN" | null;
+    role: "user" | "admin" | null;
     loading: boolean;
     login: (email: string, password: string) => Promise<void>;
     register: (name: string, email: string, password: string) => Promise<void>;
@@ -22,10 +21,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [token, setToken] = useState<string | null>(null);
-    const [role, setRole] = useState<"USER" | "ADMIN" | null>(null);
+    const [role, setRole] = useState<"user" | "admin" | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // 🔁 Restore auth state on refresh (CRITICAL)
+    // 🔁 Restore session
     useEffect(() => {
         const stored = localStorage.getItem("token");
 
@@ -34,8 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 const decoded = jwtDecode<JwtPayload>(stored);
                 setToken(stored);
                 setRole(decoded.role);
-            } catch (err) {
-                // invalid/expired token → cleanup
+            } catch {
                 localStorage.removeItem("token");
             }
         }
@@ -51,7 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         localStorage.setItem("token", token);
         setToken(token);
-        setRole(decoded.role);
+        setRole(decoded.role); // ✅ admin/user set here
     };
 
     const register = async (name: string, email: string, password: string) => {
