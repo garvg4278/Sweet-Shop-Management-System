@@ -30,6 +30,8 @@ export default function Login() {
                 {error && <p className="auth-error">{error}</p>}
 
                 <input
+                    className="auth-input"
+                    type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -37,6 +39,7 @@ export default function Login() {
                 />
 
                 <input
+                    className="auth-input"
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -44,9 +47,11 @@ export default function Login() {
                     required
                 />
 
-                <button type="submit">Login</button>
+                <button className="auth-button" type="submit">
+                    Login
+                </button>
 
-                <p>
+                <p className="auth-link">
                     New here? <Link to="/register">Register</Link>
                 </p>
             </form>

@@ -37,29 +37,33 @@ export default function AdminRequests() {
                 </p>
             )}
 
-            {data.map((r: any) => (
-                <div key={r.id} className="card">
-                    <p>
-                        <strong>User:</strong> {r.user.email}
-                    </p>
-
-                    <p>
-                        <strong>Sweet:</strong> {r.sweet.name}
-                    </p>
-
-                    <p>
-                        {r.quantity} {r.unit}
-                    </p>
-
-                    <StatusBadge status={r.status} />
-
-                    {r.status === "PENDING" && (
-                        <button onClick={() => fulfill.mutate(r.id)}>
-                            Mark Fulfilled
-                        </button>
-                    )}
+            <div className="requests-table">
+                <div className="requests-header">
+                    <span>User</span>
+                    <span>Sweet</span>
+                    <span>Quantity</span>
+                    <span>Status</span>
+                    <span>Action</span>
                 </div>
-            ))}
+
+                {data.map((r: any) => (
+                    <div key={r.id} className="requests-row">
+                        <span>{r.user.email}</span>
+                        <span>{r.sweet.name}</span>
+                        <span>{r.quantity} {r.unit}</span>
+                        <StatusBadge status={r.status} />
+
+                        {r.status === "PENDING" ? (
+                            <button onClick={() => fulfill.mutate(r.id)}>
+                                Fulfill
+                            </button>
+                        ) : (
+                            <span>—</span>
+                        )}
+                    </div>
+                ))}
+            </div>
+
         </div>
     );
 }

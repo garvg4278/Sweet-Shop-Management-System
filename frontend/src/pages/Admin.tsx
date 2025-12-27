@@ -29,7 +29,6 @@ export default function Admin() {
         onSuccess: () => {
             setForm({ name: "", category: "", price: "", quantity: "" });
             queryClient.invalidateQueries({ queryKey: ["sweets"] });
-            alert("Sweet added");
         },
     });
 
@@ -49,29 +48,30 @@ export default function Admin() {
     });
 
     return (
-        <div className="admin-page">
+        <div className="page">
             <h2>Admin Dashboard</h2>
 
+            {/* ===== ADD SWEET ===== */}
             <div className="card">
                 <h3>Add Sweet</h3>
 
-                <div className="sweets-filters">
+                <div className="admin-form">
                     <input
-                        placeholder="name"
+                        placeholder="Name"
                         value={form.name}
                         onChange={(e) =>
                             setForm({ ...form, name: e.target.value })
                         }
                     />
                     <input
-                        placeholder="category"
+                        placeholder="Category"
                         value={form.category}
                         onChange={(e) =>
                             setForm({ ...form, category: e.target.value })
                         }
                     />
                     <input
-                        placeholder="price"
+                        placeholder="Price"
                         type="number"
                         value={form.price}
                         onChange={(e) =>
@@ -79,29 +79,38 @@ export default function Admin() {
                         }
                     />
                     <input
-                        placeholder="quantity"
+                        placeholder="Quantity"
                         type="number"
                         value={form.quantity}
                         onChange={(e) =>
                             setForm({ ...form, quantity: e.target.value })
                         }
                     />
-                </div>
 
-                <button
-                    onClick={() => createMutation.mutate()}
-                    disabled={createMutation.isPending}
-                >
-                    {createMutation.isPending ? "Adding..." : "Add Sweet"}
-                </button>
+                    <button
+                        onClick={() => createMutation.mutate()}
+                        disabled={createMutation.isPending}
+                    >
+                        {createMutation.isPending ? "Adding..." : "Add Sweet"}
+                    </button>
+                </div>
             </div>
 
-            <div className="admin-list">
+            {/* ===== INVENTORY TABLE ===== */}
+            <h3 style={{ marginTop: "2rem" }}>Inventory</h3>
+
+            <div className="admin-table">
+                <div className="admin-table-header">
+                    <span>Sweet</span>
+                    <span>Stock</span>
+                    <span>Restock</span>
+                    <span>Action</span>
+                </div>
+
                 {sweets.map((s: any) => (
-                    <div key={s.id} className="admin-item">
-                        <span>
-                            {s.name} (Qty: {s.quantity})
-                        </span>
+                    <div key={s.id} className="admin-table-row">
+                        <span>{s.name}</span>
+                        <span>{s.quantity}</span>
 
                         <button
                             onClick={() =>

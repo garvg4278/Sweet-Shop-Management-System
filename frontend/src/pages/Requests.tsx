@@ -45,9 +45,10 @@ export default function Requests() {
 
     return (
         <div className="page">
+            {/* ===== CREATE REQUEST ===== */}
             <h2>Create Request</h2>
 
-            <div className="card">
+            <div className="card requests-form">
                 <select
                     value={sweetId}
                     onChange={(e) => setSweetId(e.target.value)}
@@ -68,17 +69,24 @@ export default function Requests() {
                     placeholder="Quantity"
                 />
 
-                <select value={unit} onChange={(e) => setUnit(e.target.value as any)}>
+                <select
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value as "kg" | "piece")}
+                >
                     <option value="kg">kg</option>
                     <option value="piece">piece</option>
                 </select>
 
-                <button onClick={submitRequest} disabled={createMutation.isPending}>
-                    Send Request
+                <button
+                    onClick={submitRequest}
+                    disabled={createMutation.isPending}
+                >
+                    {createMutation.isPending ? "Sending..." : "Send Request"}
                 </button>
             </div>
 
-            <h2>My Requests</h2>
+            {/* ===== MY REQUESTS ===== */}
+            <h2 style={{ marginTop: "2rem" }}>My Requests</h2>
 
             {isLoading && <p>Loading...</p>}
 
@@ -88,17 +96,26 @@ export default function Requests() {
                 </p>
             )}
 
-            {requests.map((r: any) => (
-                <div key={r.id} className="card">
-                    <p>
-                        <strong>{r.sweet.name}</strong>
-                    </p>
-                    <p>
-                        {r.quantity} {r.unit}
-                    </p>
-                    <StatusBadge status={r.status} />
-                </div>
-            ))}
+            {!isLoading && requests.length > 0 && (
+                <>
+                    {/* Header Row */}
+                    <div className="request-row" style={{ fontWeight: 600, background: "#f3f4f6" }}>
+                        <span>Sweet</span>
+                        <span>Quantity</span>
+                        <span>Status</span>
+                    </div>
+
+                    {requests.map((r: any) => (
+                        <div key={r.id} className="request-row">
+                            <strong>{r.sweet.name}</strong>
+                            <span>
+                                {r.quantity} {r.unit}
+                            </span>
+                            <StatusBadge status={r.status} />
+                        </div>
+                    ))}
+                </>
+            )}
         </div>
     );
 }

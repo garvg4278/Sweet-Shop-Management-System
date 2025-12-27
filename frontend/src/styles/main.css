@@ -1,4 +1,7 @@
-/* ---------- GLOBAL ---------- */
+/* =========================
+   GLOBAL
+========================= */
+
 body {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -6,7 +9,62 @@ body {
     color: #111827;
 }
 
-/* ---------- AUTH LAYOUT ---------- */
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* =========================
+   SHARED PAGE LAYOUT
+========================= */
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    margin-bottom: 1.5rem;
+}
+
+.page-subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    opacity: 0.75;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #111827;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+.navbar button {
+    background: #ef4444;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    color: white;
+}
+
+/* =========================
+   AUTH (LOGIN / REGISTER)
+========================= */
+
 .auth-page {
     min-height: 100vh;
     display: flex;
@@ -14,26 +72,23 @@ body {
     align-items: center;
 }
 
-/* ---------- AUTH CARD ---------- */
 .auth-card {
-    background: #ffffff;
+    background: white;
     padding: 2rem;
     width: 340px;
     border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-/* ---------- TEXT ---------- */
 .auth-title {
     margin: 0;
     text-align: center;
     font-size: 1.4rem;
 }
 
-/* ---------- INPUTS ---------- */
 .auth-input {
     padding: 0.65rem 0.7rem;
     border-radius: 8px;
@@ -46,7 +101,6 @@ body {
     border-color: #2563eb;
 }
 
-/* ---------- BUTTON ---------- */
 .auth-button {
     margin-top: 0.5rem;
     padding: 0.65rem;
@@ -55,21 +109,18 @@ body {
     background: #2563eb;
     color: white;
     font-size: 0.95rem;
-    cursor: pointer;
 }
 
 .auth-button:hover {
     background: #1e40af;
 }
 
-/* ---------- ERROR ---------- */
 .auth-error {
     color: #dc2626;
     font-size: 0.85rem;
     text-align: center;
 }
 
-/* ---------- LINKS ---------- */
 .auth-link {
     text-align: center;
     font-size: 0.85rem;
@@ -80,13 +131,43 @@ body {
     text-decoration: none;
 }
 
-.auth-link a:hover {
-    text-decoration: underline;
+/* =========================
+   SWEET CARD (Inventory / Sweets)
+========================= */
+
+.sweet-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* ===== SWEETS PAGE ===== */
+.sweet-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+/* =========================
+   INVENTORY GRID
+========================= */
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* =========================
+   SWEETS PAGE
+========================= */
 
 .sweets-page {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
 }
 
@@ -107,100 +188,177 @@ body {
     gap: 1rem;
 }
 
-/* ===== SWEET CARD ===== */
+/* =========================
+   REQUESTS (USER)
+========================= */
 
-.sweet-card {
+.requests-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.requests-form select,
+.requests-form input {
+    padding: 0.55rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
+
+.requests-form button {
+    padding: 0.55rem 0.9rem;
+    border-radius: 8px;
+    border: none;
+    background: #2563eb;
+    color: white;
+}
+
+.requests-form button:hover {
+    background: #1e40af;
+}
+
+/* My Requests rows */
+
+.request-row {
     background: white;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    gap: 1rem;
 }
 
-.sweet-title {
-    margin: 0;
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+
+.admin-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
 }
 
-.sweet-meta {
+.admin-form input {
+    padding: 0.55rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
+
+.admin-form button {
+    padding: 0.55rem 0.9rem;
+    border-radius: 8px;
+    border: none;
+    background: #2563eb;
+    color: white;
+}
+
+.admin-form button:hover {
+    background: #1e40af;
+}
+
+/* Admin Inventory Table */
+
+.admin-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.admin-table-header,
+.admin-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    align-items: center;
+}
+
+.admin-table-header {
+    background: #f3f4f6;
+    font-weight: 600;
     font-size: 0.9rem;
 }
 
-.sweet-btn {
-    margin-top: 0.5rem;
+.admin-table-row {
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9rem;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: #111827;
-    color: white;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin-right: 1rem;
-}
-
-.navbar button {
-    background: #ef4444;
-    border: none;
-    padding: 0.4rem 0.8rem;
+.admin-table-row button:not(.danger) {
+    padding: 0.35rem 0.6rem;
     border-radius: 6px;
+    border: none;
+    background: #e0e7ff;
+    color: #1e40af;
+    font-size: 0.85rem;
+}
+
+.admin-table-row button:not(.danger):hover {
+    background: #c7d2fe;
+}
+
+/* =========================
+   ADMIN REQUESTS TABLE
+========================= */
+
+.requests-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.requests-header,
+.requests-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    align-items: center;
+}
+
+.requests-header {
+    background: #f3f4f6;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.requests-row {
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.requests-row button {
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    border: none;
+    background: #2563eb;
     color: white;
+    font-size: 0.85rem;
 }
 
-.admin-page {
-    padding: 2rem;
+.requests-row button:hover {
+    background: #1e40af;
 }
 
-.admin-item {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-}
-
-.danger {
-    background: #dc2626;
-    color: white;
-}
+/* =========================
+   STATUS BADGES
+========================= */
 
 .status-badge {
-    padding: 0.25rem 0.6rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 999px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-}
-
-.status-pending {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.status-approved {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-rejected {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.status-fulfilled {
-    background: #dbeafe;
-    color: #1e40af;
-}
-
-.status-badge {
-    padding: 0.3rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
 }
 
 .status-pending {
@@ -213,13 +371,14 @@ body {
     color: white;
 }
 
-/* Optional future */
-.status-approved {
-    background: #3b82f6;
-    color: white;
-}
+/* =========================
+   DANGER BUTTON
+========================= */
 
-.status-rejected {
-    background: #ef4444;
+.danger {
+    background: #dc2626;
     color: white;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
 }

@@ -8,13 +8,20 @@ export default function Inventory() {
         queryFn: getSweets,
     });
 
-    if (isLoading) return <p>Loading inventory...</p>;
+    if (isLoading) return <p className="page-loading">Loading inventory...</p>;
 
     return (
-        <div className="inventory-page">
-            <h2>Inventory</h2>
+        <div className="page">
+            {/* Header */}
+            <div className="page-header">
+                <h2>Inventory</h2>
+                <p className="page-subtitle">
+                    Current stock available in the shop
+                </p>
+            </div>
 
-            <div className="sweets-grid">
+            {/* Grid */}
+            <div className="inventory-grid">
                 {sweets.map((sweet) => (
                     <SweetCard key={sweet.id} sweet={sweet} />
                 ))}
