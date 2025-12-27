@@ -32,7 +32,7 @@ yarn-error.log*
 backend/prisma/dev.db
 backend/prisma/*.db
 backend/prisma/*.db-journal
-
+dev.db
 # Build output (if added later)
 backend/dist/
 
