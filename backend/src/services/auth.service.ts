@@ -7,14 +7,30 @@ export async function registerUser(data: {
   name: string;
   email: string;
   password: string;
-  role?: string;
 }) {
+  // Check if user already exists
   const existingUser = await prisma.user.findUnique({
     where: { email: data.email },
   });
 
   if (existingUser) {
     throw new DomainError("User already exists");
+  }
+
+  // Check if an admin already exists
+  const adminExists = await prisma.user.findFirst({
+    where: { role: "admin" },
+  });
+
+  // Decide role safely
+  let role: "user" | "admin" = "user";
+
+  if (
+    !adminExists &&
+    process.env.ADMIN_BOOTSTRAP_EMAIL &&
+    data.email === process.env.ADMIN_BOOTSTRAP_EMAIL
+  ) {
+    role = "admin";
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -24,18 +40,19 @@ export async function registerUser(data: {
       name: data.name,
       email: data.email,
       password: hashedPassword,
-      role: data.role ?? "user", // ✅ default role
+      role,
     },
   });
 
-  // ✅ NEVER return password
+  // Never return password
   return {
     id: user.id,
     name: user.name,
     email: user.email,
-    role: user.role, // ✅ REQUIRED
+    role: user.role,
   };
 }
+
 
 export async function loginUser(data: {
   email: string;
