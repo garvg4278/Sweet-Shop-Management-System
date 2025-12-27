@@ -270,17 +270,6 @@ npm run dev
 
 ---
 
-## 🤖 AI Assistance Disclosure
-
-An AI assistant was used for **initial architectural guidance and debugging support**.
-All business logic, validation, workflows, and integration decisions were **manually implemented, tested, and verified**.
-
-```
-Co-authored-by: ChatGPT <chatgpt@openai.com>
-```
-
----
-
 ## 📌 Project Status
 
 ✅ Backend complete
