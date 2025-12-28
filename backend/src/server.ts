@@ -8,10 +8,10 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
-/* 🔑 CORS — THIS IS THE MISSING PIECE */
+/* 🔑 CORS — frontend access */
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -20,7 +20,16 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* Routes */
+/**
+ * 🔍 Health Check
+ * Used by Docker / monitoring systems
+ * Must be BEFORE /api routes and error handler
+ */
+app.get("/api/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+/* API Routes */
 app.use("/api", routes);
 
 /* Error handler MUST be last */
@@ -28,6 +37,7 @@ app.use(errorHandler);
 
 export default app;
 
+/* Server start (disabled in tests) */
 if (process.env.NODE_ENV !== "test") {
   const port = Number(process.env.PORT) || 4000;
 
@@ -35,4 +45,3 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`🚀 Server running on port ${port}`);
   });
 }
-

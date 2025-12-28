@@ -1,34 +1,24 @@
 services:
   backend:
-    image: garvg4278/sweet-shop-backend:v1
-    container_name: sweet-shop-backend
-    ports:
-      - "4000:4000"
-    environment:
-      # Prisma / Database
-      DATABASE_URL: "file:/app/data/dev.db"
-
-      # Auth
-      JWT_SECRET: "sweet-shop-prod-secret-2025"
-
-      # One-time admin bootstrap (first admin only)
-      # The FIRST user who registers with this email becomes admin
-      ADMIN_BOOTSTRAP_EMAIL: "admin@sweetshop.local"
-
-      # Runtime
-      NODE_ENV: "production"
+    image: garvg4278/sweetshop-backend:${TAG}
+    container_name: backend
+    env_file:
+      - .env
     volumes:
-      - sweet-shop-db:/app/data
-    restart: unless-stopped
+      - ./backend/dev.db:/app/dev.db
+    networks:
+      - app-net
+    healthcheck:
+      test: [ "CMD", "node", "-e", "require('http').get('http://localhost:4000/api/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   frontend:
-    image: garvg4278/sweet-shop-frontend:v1
-    container_name: sweet-shop-frontend
-    ports:
-      - "5173:80"
-    depends_on:
-      - backend
-    restart: unless-stopped
+    image: garvg4278/sweetshop-frontend:${TAG}
+    container_name: frontend
+    networks:
+      - app-net
 
-volumes:
-  sweet-shop-db:
+networks:
+  app-net:
