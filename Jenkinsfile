@@ -23,7 +23,7 @@ pipeline {
           -v \$PWD/backend:/app \
           -w /app \
           node:20-alpine \
-          sh -c "npm ci && npm test"
+          sh -c "ls -la && npm ci && npm test"
         """
       }
     }
