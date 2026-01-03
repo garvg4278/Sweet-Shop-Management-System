@@ -20,8 +20,8 @@ pipeline {
       steps {
         sh """
         docker run --rm \
-          -v \$PWD/backend:/app \
-          -w /app \
+          -v "$WORKSPACE:/app" \
+          -w /app/backend \
           node:20-alpine \
           sh -c "ls -la && npm ci && npm test"
         """
