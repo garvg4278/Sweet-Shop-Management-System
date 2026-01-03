@@ -18,10 +18,13 @@ pipeline {
 
     stage('Backend Tests') {
       steps {
-        dir('backend') {
-          sh 'npm ci || npm install'
-          sh 'npm test || true'
-        }
+        sh """
+        docker run --rm \
+          -v \$PWD/backend:/app \
+          -w /app \
+          node:20-alpine \
+          sh -c "npm ci || npm install && npm test || true"
+        """
       }
     }
 
