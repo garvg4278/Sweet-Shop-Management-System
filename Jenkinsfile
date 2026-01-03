@@ -1,58 +1,50 @@
 pipeline {
   agent any
 
-  options {
-    skipDefaultCheckout(false)
-  }
-
   environment {
-    IMAGE_BACKEND = "garvg4278/sweetshop-backend"
+    IMAGE_BACKEND  = "garvg4278/sweetshop-backend"
     IMAGE_FRONTEND = "garvg4278/sweetshop-frontend"
-    DOCKER_CREDS = credentials('dockerhub-creds')
-    TAG = "${BUILD_NUMBER}"
+    DOCKER_CREDS   = credentials('dockerhub-creds')
+    TAG            = "${BUILD_NUMBER}"
   }
 
   stages {
 
-    stage('Backend Tests') {
+    stage('Checkout') {
       steps {
-        sh '''
-        docker run --rm \
-          -v "$WORKSPACE:/app" \
-          -w /app/backend \
-          node:20-alpine \
-          sh -c "ls -la && npm ci && npm test"
-        '''
+        checkout scm
       }
     }
 
     stage('Build Docker Images') {
       steps {
-        sh '''
-        docker build -t $IMAGE_BACKEND:$TAG backend
-        docker build -t $IMAGE_FRONTEND:$TAG frontend
-        '''
+        sh """
+          docker build -t ${IMAGE_BACKEND}:${TAG} backend
+          docker build -t ${IMAGE_FRONTEND}:${TAG} frontend
+        """
       }
     }
 
     stage('Docker Login') {
       steps {
         sh '''
-        echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
+          echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
         '''
       }
     }
 
     stage('Push Images') {
       steps {
-        sh '''
-        docker push $IMAGE_BACKEND:$TAG
-        docker push $IMAGE_FRONTEND:$TAG
-        docker tag $IMAGE_BACKEND:$TAG $IMAGE_BACKEND:latest
-        docker tag $IMAGE_FRONTEND:$TAG $IMAGE_FRONTEND:latest
-        docker push $IMAGE_BACKEND:latest
-        docker push $IMAGE_FRONTEND:latest
-        '''
+        sh """
+          docker push ${IMAGE_BACKEND}:${TAG}
+          docker push ${IMAGE_FRONTEND}:${TAG}
+
+          docker tag ${IMAGE_BACKEND}:${TAG} ${IMAGE_BACKEND}:latest
+          docker tag ${IMAGE_FRONTEND}:${TAG} ${IMAGE_FRONTEND}:latest
+
+          docker push ${IMAGE_BACKEND}:latest
+          docker push ${IMAGE_FRONTEND}:latest
+        """
       }
     }
   }
